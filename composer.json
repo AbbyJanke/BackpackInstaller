@@ -1,0 +1,31 @@
+{
+    "name": "abbyjanke/backpack-installer",
+    "description": "Backpack Installation Web Interface",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Abby Janke",
+            "email": "me@abbyjanke.com"
+        },
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AbbyJanke\\BackpackInstaller\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AbbyJanke\\BackpackInstaller\\InstallerServiceProvider"
+            ],
+            "aliases": {
+                "Installer": "AbbyJanke\\BackpackInstaller\\InstallerServiceProvider"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
