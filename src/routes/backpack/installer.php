@@ -15,12 +15,12 @@ Route::group([
 ], function () {
 
   Route::get('/', [
-    'as' => 'welcome',
+    'as' => 'installer.welcome',
     'uses' => 'InstallController@index'
   ]);
 
   Route::get('requirements', [
-    'as' => 'requirements',
+    'as' => 'installer.requirements',
     'uses' => 'InstallController@requirements'
   ]);
 

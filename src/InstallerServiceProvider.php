@@ -36,6 +36,8 @@ class InstallerServiceProvider extends ServiceProvider
       // - then the stock views that come with the package, in case a published view might be missing
       $this->loadViewsFrom(realpath(__DIR__.'/resources/views'), 'installer');
 
+      $this->loadTranslationsFrom(realpath(__DIR__.'/resources/lang'), 'installer');
+
       // use the vendor configuration file as fallback
       $this->mergeConfigFrom(
         __DIR__.'/config/backpack/installer.php', 'backpack.installer'

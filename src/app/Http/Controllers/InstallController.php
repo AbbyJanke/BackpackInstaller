@@ -2,13 +2,15 @@
 namespace AbbyJanke\BackpackInstaller\app\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use AbbyJanke\BackpackInstaller\Helpers\Requirements;
 
 class InstallController extends Controller
 {
 
   private $steps;
+  private $requirements;
 
-  public function __construct() {
+  public function __construct(Requirements $requirements) {
     $this->steps = [
       'fa-home' => 0, // welcome
       'fa-clipboard-list' => 0, // requirements
@@ -17,23 +19,29 @@ class InstallController extends Controller
       'fa-user' => 0, // first user
       'fa-check' => 0, // complete
     ];
+
+    $this->requirements = $requirements;
   }
 
   public function index() {
-    $data['title'] = 'Backpack Installer';
+    $data['title'] = trans('installer::installer.welcome');
     $data['steps'] = $this->steps;
+    $data['active'] = 'fa-home';
 
     return view('installer::welcome', $data);
   }
 
   public function requirements() {
-
     $this->steps['fa-home'] = 1;
-    
-    $data['title'] = 'Checking Requirements';
+    $data['title'] = trans('installer::installer.check_requirements');
     $data['steps'] = $this->steps;
+    $data['active'] = 'fa-clipboard-list';
 
-    return view('installer::welcome', $data);
+    $data['phpVersion'] = $this->requirements->checkPHPversion(config('backpack.installer.phpVersion'));
+    $data['requirements'] = $this->requirements->check(config('backpack.installer.requirements'));
+
+
+    return view('installer::requirements', $data);
   }
 
 }

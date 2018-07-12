@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/solid.css" integrity="sha384-TbilV5Lbhlwdyc4RuIV/JhD8NR+BfMrvz4BL5QFa2we1hQu6wvREr3v6XSRfCTRp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/regular.css" integrity="sha384-avJt9MoJH2rB4PKRsJRHZv7yiFZn8LrnXuzvmZoD3fh1aL6aM6s0BBcnCvBe6XSD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/fontawesome.css" integrity="sha384-ozJwkrqb90Oa3ZNb+yKFW2lToAWYdTiF1vt8JiH5ptTGHTGcN7qdoR1F95e0kYyG" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
@@ -17,18 +18,15 @@
   <body>
     <div class="row">
       <div class="logo col-lg-4 offset-lg-4">
-        <img src="{{ asset('vendor/backpack/installer/imgs/backpack_logo.png') }}" alt="Backpack For Laravel Installer"/>
+        <img src="{{ asset('vendor/backpack/installer/imgs/backpack_logo.png') }}" alt="{{ trans('installer::installer.backpack_laravel') }}"/>
       </div>
       <div class="col-lg-4 offset-lg-4">
         <div class="card">
           <div class="card-header">
             {{ $title }}
             <ul class="list-inline steps">
-              @php $lastStep = 0; $current = false; @endphp
               @foreach($steps as $icon => $completed)
-                @php if($lastStep > $completed) { $current = true; } @endphp
-
-                <li class="list-inline-item @if($completed) performed @endif @if($current) active @endif"><i class="fas {{ $icon}}"></i></li>
+                <li class="list-inline-item @if($completed) performed @endif @if($active == $icon) active @endif"><i class="fas {{ $icon}}"></i></li>
               @endforeach
             </ul>
           </div>
@@ -36,7 +34,7 @@
             @yield('content')
           </div>
         </div>
-        <p class="copyright">Powered By <a href="http://backpackforlaravel.com/?ref=installer_footer_link">Backpack For Laravel</a></p>
+        <p class="copyright">{{ trans('installer::installer.powered_by') }} <a href="http://backpackforlaravel.com/?ref=installer_footer_link">{{ trans('installer::installer.backpack_laravel') }}</a></p>
       </div>
 
     </div>
