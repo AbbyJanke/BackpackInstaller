@@ -3,14 +3,16 @@ namespace AbbyJanke\BackpackInstaller\app\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use AbbyJanke\BackpackInstaller\Helpers\Requirements;
+use AbbyJanke\BackpackInstaller\Helpers\Permissions;
 
 class InstallController extends Controller
 {
 
   private $steps;
   private $requirements;
+  private $permissions;
 
-  public function __construct(Requirements $requirements) {
+  public function __construct(Requirements $requirements, Permissions $permissions) {
     $this->steps = [
       'fa-home' => 0, // welcome
       'fa-clipboard-list' => 0, // requirements
@@ -21,6 +23,7 @@ class InstallController extends Controller
     ];
 
     $this->requirements = $requirements;
+    $this->permissions = $permissions;
   }
 
   public function index() {
@@ -32,7 +35,6 @@ class InstallController extends Controller
   }
 
   public function requirements() {
-    $this->steps['fa-home'] = 1;
     $data['title'] = trans('installer::installer.check_requirements');
     $data['steps'] = $this->steps;
     $data['active'] = 'fa-clipboard-list';
@@ -42,6 +44,26 @@ class InstallController extends Controller
 
 
     return view('installer::requirements', $data);
+  }
+
+  public function permissions() {
+    $data['title'] = trans('installer::installer.permissions');
+    $data['steps'] = $this->steps;
+    $data['active'] = 'fa-key';
+
+    $data['permissions'] = $this->permissions->check(config('backpack.installer.permissions'));
+
+    return view('installer::permissions', $data);
+  }
+
+  public function settings() {
+    $data['title'] = trans('installer::installer.settings');
+    $data['steps'] = $this->steps;
+    $data['active'] = 'fa-cog';
+
+    $data['permissions'] = $this->permissions->check(config('backpack.installer.permissions'));
+
+    return view('installer::settings', $data);
   }
 
 }

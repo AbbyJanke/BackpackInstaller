@@ -24,4 +24,14 @@ Route::group([
     'uses' => 'InstallController@requirements'
   ]);
 
+  Route::get('permissions', [
+    'as' => 'installer.permissions',
+    'uses' => 'InstallController@permissions'
+  ]);
+
+  Route::get('settings', [
+    'as' => 'installer.permissions',
+    'uses' => 'InstallController@permissions'
+  ]);
+
 });

@@ -25,13 +25,27 @@
           <div class="card-header">
             {{ $title }}
             <ul class="list-inline steps">
+              @php $isCompleted = true; @endphp
               @foreach($steps as $icon => $completed)
-                <li class="list-inline-item @if($completed) performed @endif @if($active == $icon) active @endif"><i class="fas {{ $icon}}"></i></li>
+                <li class="list-inline-item @if($isCompleted) performed @endif @if($active == $icon) active @endif"><i class="fas {{ $icon}}"></i></li>
+                @if($active == $icon)
+                  @php $isCompleted = false; @endphp
+                @endif
               @endforeach
             </ul>
           </div>
           <div class="card-body">
             @yield('content')
+
+            <div class="continue-btn text-center"><p>
+              @if (isset($permissions['errors']))
+                <a onclick="reloadPage()" href="#" class="btn btn-primary btn-sm">{{ trans('installer::installer.reload') }} <i class="fas fa-redo"></i></a>
+              @else
+                @yield('button')
+              @endif
+            </p>
+            </div>
+
           </div>
         </div>
         <p class="copyright">{{ trans('installer::installer.powered_by') }} <a href="http://backpackforlaravel.com/?ref=installer_footer_link">{{ trans('installer::installer.backpack_laravel') }}</a></p>
@@ -44,4 +58,9 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <script>
+    function reloadPage() {
+      location.reload();
+    }
+  </script>
 </html>

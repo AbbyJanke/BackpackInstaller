@@ -9,6 +9,7 @@ return [
   'settings' => 'Application Settings',
   'user' => 'Create Your Account',
   'create_and_login' => 'Create user and login',
+  'reload' => 'Try again',
 
   // page descriptions
   'welcome_info' => 'Install and setup wizard',
