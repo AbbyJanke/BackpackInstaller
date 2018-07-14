@@ -34,4 +34,14 @@ Route::group([
     'uses' => 'InstallController@settings'
   ]);
 
+  Route::post('settings', [
+    'as' => 'installer.install',
+    'uses' => 'InstallController@saveSettings'
+  ]);
+
+  Route::post('perform', [
+    'as' => 'installer.perform',
+    'uses' => 'InstallController@perform'
+  ]);
+
 });

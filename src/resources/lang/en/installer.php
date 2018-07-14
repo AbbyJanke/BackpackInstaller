@@ -10,6 +10,7 @@ return [
   'user' => 'Create Your Account',
   'create_and_login' => 'Create user and login',
   'reload' => 'Try again',
+  'perform_installation' => 'Perform Backpack Installation',
 
   // page descriptions
   'welcome_info' => 'Install and setup wizard',

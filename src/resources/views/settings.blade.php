@@ -16,7 +16,7 @@
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <form method="post" acion="{{ route('installer.settings') }}">
+  <form method="POST" acion="{{ route('installer.settings') }}" id="settingsForm">
     {{ csrf_field() }}
     <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
       <div class="applicationContent">@include('installer::forms.application')</div>
@@ -32,6 +32,10 @@
     </div>
   </form>
 </div>
+@endsection
+
+@section('button')
+  <input type="submit" class="btn btn-primary btn-sm" form="settingsForm" value="{{ trans('installer::installer.perform_installation') }}" />
 @endsection
 
 @push('after_scripts')

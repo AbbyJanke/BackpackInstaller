@@ -4,6 +4,7 @@ namespace AbbyJanke\BackpackInstaller\Helpers;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Encryption\Encrypter;
 
 class Settings
 {
@@ -17,23 +18,36 @@ class Settings
     public function saveSettings($request)
     {
         $results = trans('installer::installer.settings_success');
+        $key = config('app.key');
 
         $envFileData =
         'APP_NAME=\'' . $request->app_name . "'\n" .
-        'APP_ENV=' . $request->environment . "\n" .
-        'APP_KEY=' . 'base64:bODi8VtmENqnjklBmNJzQcTTSC8jNjBysfnjQN59btE=' . "\n" .
+        'APP_ENV=' . $request->environment . "\n";
+
+        if($request->has('new_key') && $request->get('new_key') == true) {
+          $key = base64_encode(Encrypter::generateKey(config('app.cipher')));
+        }
+
+        $envFileData = $envFileData.
+        'APP_KEY=' . 'base64:'.$key. "\n" .
         'APP_DEBUG=' . $request->app_debug . "\n" .
         'APP_URL=' . $request->app_url . "\n\n" .
 
-        'LOG_CHANNEL=' . $request->log_level . "\n\n" .
+        'LOG_CHANNEL=' . $request->log_channel . "\n\n" .
 
         'DB_CONNECTION=' . $request->database_connection . "\n" .
         'DB_HOST=' . $request->database_hostname . "\n" .
         'DB_PORT=' . $request->database_port . "\n" .
         'DB_DATABASE=' . $request->database_name . "\n" .
         'DB_USERNAME=' . $request->database_username . "\n" .
-        'DB_PASSWORD=' . $request->database_password . "\n\n" .
+        'DB_PASSWORD=' . $request->database_password . "\n";
 
+        // if we define a socket for the mysql database connection lets add it in
+        if($request->has('database_socket')) {
+          $envFileData = $envFileData.'DB_SOCKET=' . $request->database_socket . "\n";
+        }
+
+        $envFileData = $envFileData. "\n" .
         'BROADCAST_DRIVER=' . $request->broadcast_driver . "\n" .
         'CACHE_DRIVER=' . $request->cache_driver . "\n" .
         'SESSION_DRIVER=' . $request->session_driver . "\n" .
@@ -41,8 +55,20 @@ class Settings
 
         'REDIS_HOST=' . $request->redis_hostname . "\n" .
         'REDIS_PASSWORD=' . $request->redis_password . "\n" .
-        'REDIS_PORT=' . $request->redis_port . "\n\n" .
+        'REDIS_PORT=' . $request->redis_port . "\n";
 
+        // if we define a socket for the mysql database connection lets add it in
+        if($request->has('memcached_persistent_id') && !is_null($request->get('memcached_persistent_id'))) {
+          $memcacheData =
+          'MEMCACHED_HOST=\'' . $request->memcached_host . "'\n" .
+          'MEMCACHED_PORT=\'' . $request->memcached_port . "'\n" .
+          'MEMCACHED_PERSISTENT_ID=\'' . $request->memcached_persistent_id . "'\n" .
+          'MEMCACHED_USERNAME=\'' . $request->memcached_username . "'\n" .
+          'MEMCACHED_PASSWORD=\'' . $request->memcached_password . "'\n";
+          $envFileData = $envFileData. "\n" .$memcacheData;
+        }
+
+        $envFileData = $envFileData. "\n" .
         'MAIL_DRIVER=' . $request->mail_driver . "\n" .
         'MAIL_HOST=' . $request->mail_host . "\n" .
         'MAIL_PORT=' . $request->mail_port . "\n" .
@@ -71,6 +97,12 @@ class Settings
         return $results;
     }
 
+    /**
+    * Before we try to save the new data lets make sure the database info is correct
+    *
+    * @param Request $request
+    * @return boolean
+    */
     public function checkDBConnection($request) {
       $connection = $request->input('database_connection');
       $settings = config("database.connections.{$connection}");
@@ -90,6 +122,7 @@ class Settings
           ],
         ],
       ]);
+
 
       try {
         DB::connection()->getPdo();

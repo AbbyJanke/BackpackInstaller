@@ -3,6 +3,7 @@ namespace AbbyJanke\BackpackInstaller\app\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Validator;
 
 use AbbyJanke\BackpackInstaller\Helpers\Requirements;
 use AbbyJanke\BackpackInstaller\Helpers\Permissions;
@@ -70,6 +71,7 @@ class InstallController extends Controller
   }
 
   public function saveSettings(Request $request) {
+
     $rules = config('backpack.installer.rules');
     $messages = [
       'backpack_license.required_unless' => trans('installer::installer.backpack_license_required'),
@@ -91,6 +93,14 @@ class InstallController extends Controller
         'database_connection' => trans('installer::installer.db_connection_failed'),
       ]);
     }
+
+    $results = $this->settings->saveSettings($request);
+
+    return redirect()->route('installer.perform');
+  }
+
+  public function perform() {
+    //
   }
 
 }
