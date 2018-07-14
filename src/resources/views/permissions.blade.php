@@ -17,5 +17,5 @@
 @endsection
 
 @section('button')
-  <a href="{{ route('installer.permissions') }}" class="btn btn-primary btn-sm">{{ trans('installer::installer.permissions') }} <i class="fas fa-angle-right"></i></a>
+  <a href="{{ route('installer.settings') }}" class="btn btn-primary btn-sm">{{ trans('installer::installer.settings') }} <i class="fas fa-angle-right"></i></a>
 @endsection

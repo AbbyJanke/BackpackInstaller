@@ -2,8 +2,11 @@
 namespace AbbyJanke\BackpackInstaller\app\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
+
 use AbbyJanke\BackpackInstaller\Helpers\Requirements;
 use AbbyJanke\BackpackInstaller\Helpers\Permissions;
+use AbbyJanke\BackpackInstaller\Helpers\Settings;
 
 class InstallController extends Controller
 {
@@ -11,8 +14,9 @@ class InstallController extends Controller
   private $steps;
   private $requirements;
   private $permissions;
+  private $settings;
 
-  public function __construct(Requirements $requirements, Permissions $permissions) {
+  public function __construct(Requirements $requirements, Permissions $permissions, Settings $settings) {
     $this->steps = [
       'fa-home' => 0, // welcome
       'fa-clipboard-list' => 0, // requirements
@@ -24,6 +28,7 @@ class InstallController extends Controller
 
     $this->requirements = $requirements;
     $this->permissions = $permissions;
+    $this->settings = $settings;
   }
 
   public function index() {
@@ -61,9 +66,31 @@ class InstallController extends Controller
     $data['steps'] = $this->steps;
     $data['active'] = 'fa-cog';
 
-    $data['permissions'] = $this->permissions->check(config('backpack.installer.permissions'));
-
     return view('installer::settings', $data);
+  }
+
+  public function saveSettings(Request $request) {
+    $rules = config('backpack.installer.rules');
+    $messages = [
+      'backpack_license.required_unless' => trans('installer::installer.backpack_license_required'),
+      'pusher_app_id.required_if' => trans('installer::installer.pusher_required'),
+      'pusher_app_key.required_if' => trans('installer::installer.pusher_required'),
+      'pusher_app_secret.required_if' => trans('installer::installer.pusher_required'),
+    ];
+
+    $validator = Validator::make($request->all(), $rules, $messages);
+
+    // check if validation passed, if not redirect back with errors.
+    if ($validator->fails()) {
+      return redirect()->back()->withInput()->withErrors($validator->errors());
+    }
+
+    // check to make sure we are able to connect to the database.
+    if (!$this->settings->checkDBConnection($request)) {
+      return redirect()->back()->withInput()->withErrors([
+        'database_connection' => trans('installer::installer.db_connection_failed'),
+      ]);
+    }
   }
 
 }

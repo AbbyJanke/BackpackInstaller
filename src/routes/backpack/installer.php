@@ -30,8 +30,8 @@ Route::group([
   ]);
 
   Route::get('settings', [
-    'as' => 'installer.permissions',
-    'uses' => 'InstallController@permissions'
+    'as' => 'installer.settings',
+    'uses' => 'InstallController@settings'
   ]);
 
 });

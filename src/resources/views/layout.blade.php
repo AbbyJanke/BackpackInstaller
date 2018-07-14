@@ -63,4 +63,5 @@
       location.reload();
     }
   </script>
+  @stack('after_scripts')
 </html>
