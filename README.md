@@ -21,7 +21,7 @@ php artisan vendor:publish --provider="AbbyJanke\BackpackInstaller\InstallerServ
 3. Create your new user.
 
 
-## Overwriting Functionality
+## Custom Usage (Additional Additional Install Commands, View Customization, &amp; Translate)
 
 While this package is designed to work straight out of the box for installing backpack should you be creating a package using
 Backpack which has additional installation steps you can easily add these new steps by publishing the config to overwrite which
