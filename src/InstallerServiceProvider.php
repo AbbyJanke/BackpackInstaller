@@ -80,19 +80,10 @@ class InstallerServiceProvider extends ServiceProvider
         $publicAssets = [__DIR__.'/public' => public_path('vendor/backpack')];
         $langFiles = [__DIR__.'/resources/lang' => resource_path('lang/vendor/backpack')];
 
-        // establish the minimum amount of files that need to be published, for Backpack to work; there are the files that will be published by the install command
-        $minimum = array_merge(
-          $publicAssets,
-          $configFile,
-          $publicAssets,
-          $langFiles
-        );
-
         // register all possible publish commands and assign tags to each
         $this->publishes($configFile, 'config');
         $this->publishes($langFiles, 'lang');
         $this->publishes($viewFiles, 'views');
         $this->publishes($publicAssets, 'public');
-        $this->publishes($minimum, 'minimum');
     }
 }

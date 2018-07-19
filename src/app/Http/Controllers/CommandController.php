@@ -9,6 +9,22 @@ use Symfony\Component\Process\Process;
 class CommandController extends Controller
 {
 
+    /**
+     * Run the necessary migrations
+     *
+     * @return response
+     **/
+    public function base_install()
+    {
+        $response = $this->executeProcess('composer require backpack/base');
+
+        if ($response) {
+            return $this->returnTrue();
+        }
+
+        return $this->returnFalse();
+    }
+
    /**
     * Install backpack and laracasts generators
     *

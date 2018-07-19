@@ -6,7 +6,7 @@
         {
             "name": "Abby Janke",
             "email": "me@abbyjanke.com"
-        },
+        }
     ],
     "require": {
         "php": ">=7.0.0"

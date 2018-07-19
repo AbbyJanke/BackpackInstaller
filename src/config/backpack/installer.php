@@ -96,15 +96,17 @@ return [
   // name_of_controller_function => what gets displayed to user
   // IMPORTANT: The last step should be called `redirect` and which will auto redirect to the next step
   'steps' => [
-    'generators' => 'Step 1: Starting Backpack Installation..',
-    'assets' => 'Step 2: Publishing backpack configs, langs, views and AdminLTE files',
-    'alerts' => 'Step 3: Publishing config for notifications - prologue/alerts',
-    'migrations' => 'Step 4: Generating users table (using Laravel\'s default migrations)',
-    'crud_install' => 'Step 5: Installing Backpack CRUD',
-    'crud_assets' => 'Step 6: Publishing CRUD configs, langs, and assets',
+    'base_install' => 'Step 1: Installing Backpack.',
+    'generators' => 'Step 2: Installing generators if on local environment.',
+    'assets' => 'Step 3: Publishing backpack configs, langs, views and AdminLTE files',
+    'alerts' => 'Step 4: Publishing config for notifications - prologue/alerts',
+    'migrations' => 'Step 5: Generating users table (using Laravel\'s default migrations)',
+    'crud_install' => 'Step 6: Installing Backpack CRUD',
+    'crud_assets' => 'Step 7: Publishing CRUD configs, langs, and assets',
   ],
 
   // The name of the path that the user is redirected to after successful installation.
+  // useful to display a form for creating a new user.
   'after_install_name' => 'installer.create_user',
 
 ];
