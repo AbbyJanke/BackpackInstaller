@@ -1,5 +1,11 @@
 # AbbyJanke\BackpackInstaller
 
+Complete Backpack Base & Crud Installer with customization optoins to make work for your application based on backpack by adding additional installation command steps.
+
+![](https://dzwonsemrish7.cloudfront.net/items/0Z3z3R18091j3s1u2721/backpack-installer.dev_admin_install_requirements.png)
+
+Take a look at more screenshots [here][link-screenshots]
+
 ## Install
 
 1) Run in your terminal:
@@ -49,3 +55,4 @@ Backpack is free for non-commercial use and 49 EUR/project for commercial use. P
 
 [link-author]: http://abbyjanke.com
 [link-tabacito]: http://tabacitu.ro
+[link-screenshots]: https://github.com/AbbyJanke/BackpackInstaller/wiki/Screenshots
