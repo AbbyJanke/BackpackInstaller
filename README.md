@@ -1,12 +1,5 @@
 # AbbyJanke\BackpackInstaller
 
-Laravel BackPack's central package, which includes:
-- admin login interface, using AdminLTE;
-- basic menu;
-- pretty error pages;
-- alerts system (notification bubbles);
-
-
 ## Install
 
 1) Run in your terminal:
