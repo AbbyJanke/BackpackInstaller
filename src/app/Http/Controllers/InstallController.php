@@ -96,11 +96,47 @@ class InstallController extends Controller
 
     $results = $this->settings->saveSettings($request);
 
-    return redirect()->route('installer.perform');
+    return $this->performInstall();
+
   }
 
-  public function perform() {
-    //
+  public function performInstall() {
+
+    $data['title'] = trans('installer::installer.perform_installation');
+    $data['steps'] = $this->steps;
+    $data['active'] = 'fa-cog';
+
+    return view('installer::perform_installation', $data);
+  }
+
+  public function createUser() {
+
+    $data['title'] = trans('installer::installer.create_user');
+    $data['steps'] = $this->steps;
+    $data['active'] = 'fa-user';
+
+    return view('installer::create_user', $data);
+
+  }
+
+  public function saveUser(Request $request) {
+
+    $user_model_fqn = config('backpack.base.user_model_fqn');
+    $user = new $user_model_fqn();
+
+    $newUser = $user->create([
+        'name'                             => $request->get('name'),
+        backpack_authentication_column()   => $request->get(backpack_authentication_column()),
+        'password'                         => bcrypt($request->get('password')),
+    ]);
+
+    backpack_auth()->login($newUser);
+
+    // show a success message
+    \Alert::success(trans('installer::installer.successfully_installed'))->flash();
+
+    return redirect(backpack_url('dashboard'));
+
   }
 
 }

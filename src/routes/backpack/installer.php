@@ -39,9 +39,34 @@ Route::group([
     'uses' => 'InstallController@saveSettings'
   ]);
 
-  Route::post('perform', [
+  Route::get('perform', [
     'as' => 'installer.perform',
-    'uses' => 'InstallController@perform'
+    'uses' => 'InstallController@performInstall'
   ]);
+
+  Route::get('user', [
+    'as' => 'installer.create_user',
+    'uses' => 'InstallController@createUser'
+  ]);
+
+  Route::post('user', [
+    'as' => 'installer.create_user',
+    'uses' => 'InstallController@saveUser'
+  ]);
+
+});
+
+Route::group([
+    'prefix'     => 'steps',
+], function () {
+  $controller = config('backpack.installer.command_controller').'@';
+
+  // create the route for each step from the config
+  foreach(config('backpack.installer.steps') as $name => $step) {
+    Route::post($name, [
+      'as' => 'installer.steps.'.$name,
+      'uses' => $controller.$name
+    ]);
+  }
 
 });
