@@ -60,7 +60,7 @@ $currentProgress = 0;
           step_{{ $key }}();
         @else
 
-          $('#StepProgress').append('<li>Installation complete, redirecting you to create a new user account.</li>');
+          $('#StepProgress').append('<li>{{ trans('installer::installer.redirecting_to_user') }}</li>');
           var url = "{{ route(config('backpack.installer.after_install_name')) }}";
           $(location).delay(4000).attr('href',url);
 
@@ -70,7 +70,7 @@ $currentProgress = 0;
         $('.progress-bar').removeClass('bg-success');
         $('.progress-bar').addClass('bg-danger');
         $('.loader').addClass('hidden');
-        $('#StepProgress').append('<li class="text-danger">Sorrying something went wrong when installing, please try again or contact support if this continues.</li>');
+        $('#StepProgress').append('<li class="text-danger">{{ trans('installer::installer.error_installing') }}</li>');
 
         var data = $response.responseJSON;
         console.log(data);

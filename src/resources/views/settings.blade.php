@@ -3,16 +3,16 @@
 @section('content')
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" id="application-tab" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">Application</a>
+    <a class="nav-link active" id="application-tab" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">{{ trans('installer::installer.application') }}</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="database-tab" data-toggle="tab" href="#database" role="tab" aria-controls="database" aria-selected="false">Database</a>
+    <a class="nav-link" id="database-tab" data-toggle="tab" href="#database" role="tab" aria-controls="database" aria-selected="false">{{ trans('installer::installer.database') }}</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="broadcasting-tab" data-toggle="tab" href="#broadcasting" role="tab" aria-controls="broadcasting" aria-selected="false">Broadcasting</a>
+    <a class="nav-link" id="broadcasting-tab" data-toggle="tab" href="#broadcasting" role="tab" aria-controls="broadcasting" aria-selected="false">{{ trans('installer::installer.broadcasting') }}</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="services-tab" data-toggle="tab" href="#services" role="tab" aria-controls="services" aria-selected="false">Services</a>
+    <a class="nav-link" id="services-tab" data-toggle="tab" href="#services" role="tab" aria-controls="services" aria-selected="false">{{ trans('installer::installer.services') }}</a>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">

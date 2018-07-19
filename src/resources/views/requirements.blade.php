@@ -3,7 +3,7 @@
 @section('content')
   <div class="list-group">
     <li class="list-group-item bg-primary text-white">
-      PHP <small>(minimum {{ $phpVersion['minimum'] }})</small>
+      {!! trans('installer::installer.php_minimum', ['version' => $phpVersion['minimum']]) !!}
       <span class="float-right">
         {{ $phpVersion['current'] }}
         <i class="far fa-{{ $phpVersion['supported'] ? 'check-circle' : 'times-circle' }}"></i>
